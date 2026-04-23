@@ -10,8 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-mongoose.connect("mongodb+srv://dikanshusahu_db_user:52D4bAdZxN91xEI@cluster0.xxxxx.mongodb.net/cropDB")
+mongoose.connect("mongodb+srv://dikanshusahu_db_user:52D4bAdZxN91xEIL@cluster0.abc123.mongodb.net/cropDB?retryWrites=true&w=majority")
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log("❌ DB Error:", err));
 // ✅ routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/app", require("./routes/app"));
