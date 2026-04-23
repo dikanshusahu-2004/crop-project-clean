@@ -19,7 +19,6 @@ app.use("/api/app", require("./routes/app"));
 app.use("/api/patwari", require("./routes/patwari"));
 app.use("/api/insurance", require("./routes/insurance"));
 app.use("/api/bank", require("./routes/bank"));
-app.use(express.static("../frontend"));
 
 // ✅ uploads (image serve)
 app.use("/uploads", express.static("uploads"));
