@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Upload Crop Image</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #56ab2f, #a8e063);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .upload-box {
+            border: 2px dashed #56ab2f;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #56ab2f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3d8b1e;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        img {
+            margin-top: 10px;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🌱 Upload Crop Image</h2>
+
+    <!-- upload box -->
+    <div class="upload-box" onclick="document.getElementById('file').click()">
+        <p>Select Image</p>
+        <input type="file" id="file" onchange="previewImage(event)">
+        <p id="fileName">No file selected</p>
+    </div>
+
+    <!-- preview -->
+    <img id="preview" style="display:none;">
+
+    <!-- button -->
+    <button onclick="uploadImage()">Upload</button>
+
+    <!-- result -->
+    <p id="result"></p>
+</div>
+
+<script>
+
+// preview image
+function previewImage(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+        document.getElementById("fileName").innerText = file.name;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById("preview");
+            img.src = e.target.result;
+            img.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// upload function
+async function uploadImage() {
+
+    const fileInput = document.getElementById("file");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select file ❌");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("http://localhost:5000/api/app/upload", {
+    method: "POST",
+    body: formData
+});
+
+const data = await res.json();
+
+// 🔥 YAHAN ADD KARNA HAI
+console.log("FULL RESPONSE:", data);
+
+document.getElementById("result").innerText = "Result: " + data.result;
+
+    if (data.result && data.result.toLowerCase() === "damaged") {
+    console.log("Redirecting...");
+    window.location.href = "claim.html";
+}
+
+    }
+
+
+</script>
+
+</body>
+</html>

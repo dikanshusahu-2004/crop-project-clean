@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PMFBY Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="main">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🌿 PMFBY Farmer Dashboard</h1>
+        <p>Smart Crop Insurance System</p>
+    </div>
+
+    <!-- PROCESS FLOW -->
+    <div class="process">
+
+        <div class="step active">Login</div>
+        <div class="arrow">→</div>
+        <div class="step">Upload Image</div>
+        <div class="arrow">→</div>
+        <div class="step">Damage Detect</div>
+        <div class="arrow">→</div>
+        <div class="step">Apply Claim</div>
+        <div class="arrow">→</div>
+        <div class="step">Insurance</div>
+        <div class="arrow">→</div>
+        <div class="step">Bank</div>
+
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+        <!-- Upload -->
+        <div class="card">
+            <h3>📤 Upload Crop Image</h3>
+            <p>Detect crop damage using AI</p>
+            <button onclick="goToUpload()">Upload Now</button>
+        </div>
+
+        <!-- Apply -->
+        <div class="card">
+            <h3>📝 Apply Claim</h3>
+            <p>Fill crop damage claim form</p>
+            <button onclick="goToApply()">Apply Now</button>
+        </div>
+
+        <!-- Status -->
+        <div class="card">
+            <h3>📊 Application Status</h3>
+            <p>Track your claim progress</p>
+            <button onclick="goToStatus()">View Status</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

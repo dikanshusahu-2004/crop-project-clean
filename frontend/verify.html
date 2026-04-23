@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patwari Verification</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background: #f5f7fa; }
+        .card { border-radius: 12px; }
+        img { border-radius: 10px; margin-top:10px; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+<div class="card shadow p-4">
+
+<h3 class="text-primary mb-3">🔍 Claim Verification</h3>
+
+<!-- Farmer Details -->
+<div class="row">
+    <div class="col-md-6">
+        <h5 class="text-success">Farmer Details</h5>
+        <p><b>Name:</b> <span id="name"></span></p>
+        <p><b>Mobile:</b> <span id="mobile"></span></p>
+        <p><b>Village:</b> <span id="village"></span></p>
+        <p><b>District:</b> <span id="district"></span></p>
+    </div>
+
+    <div class="col-md-6">
+        <h5 class="text-success">Crop Details</h5>
+        <p><b>Crop:</b> <span id="crop"></span></p>
+        <p><b>Season:</b> <span id="season"></span></p>
+        <p><b>Damage Type:</b> <span id="damage"></span></p>
+    </div>
+</div>
+
+<hr>
+
+<!-- Farmer Image -->
+<h5 class="text-danger">Farmer Uploaded Damage Image</h5>
+<img id="farmerImage" width="250">
+
+<hr>
+
+<!-- Upload Survey Image -->
+<h5 class="text-primary">Patwari Survey Image</h5>
+
+<input type="file" id="surveyImage" class="form-control">
+
+<button type="button" onclick="uploadImage()" class="btn btn-primary mt-2">
+  Upload Survey Image
+</button>
+
+<img id="surveyPreview" width="250">
+<hr>
+
+<!-- Notes -->
+<label>Survey Notes</label>
+<textarea id="notesInput" class="form-control mt-2"></textarea>
+
+<label class="mt-2">Actual Yield</label>
+<input type="number" id="yieldInput" class="form-control" placeholder="Enter Yield">
+
+<!-- Buttons -->
+<button type="button" onclick="updateStatus('Approved')" class="btn btn-success mt-3 w-100">
+  Approve Claim
+</button>
+
+<button type="button" onclick="updateStatus('Rejected')" class="btn btn-danger mt-2 w-100">
+  Reject Claim
+</button>
+
+
+
+<a href="patwari-dashboard.html" class="btn btn-secondary mt-2 w-100">
+Back
+</a>
+
+</div>
+</div>
+
+<script>
+
+// 🔥 STEP 1: ID URL से लो
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+
+console.log("ID:", id);
+
+if (!id) {
+  alert("Invalid ID ❌");
+  throw new Error("ID missing");
+}
+
+// 🔥 STEP 2: DATA FETCH
+fetch(`http://localhost:5000/api/app/${id}`)
+  .then(res => res.json())
+  .then(data => {
+
+    console.log("FULL DATA:", data);
+
+    document.getElementById("name").innerText = data.name;
+    document.getElementById("mobile").innerText = data.mobile;
+    document.getElementById("village").innerText = data.village;
+    document.getElementById("district").innerText = data.district;
+
+    document.getElementById("crop").innerText = data.crop_name;
+    document.getElementById("season").innerText = data.season;
+    document.getElementById("damage").innerText = data.damage_type;
+
+    document.getElementById("farmerImage").src =
+      "http://localhost:5000/uploads/" + data.image;
+  });
+
+
+// 🔥 ✅ UPLOAD IMAGE FUNCTION (OUTSIDE)
+function uploadImage() {
+
+  const fileInput = document.getElementById("surveyImage");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Select image first ❌");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  fetch(`http://localhost:5000/api/app/upload-survey/${id}`, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    alert("Survey Image Uploaded ✅");
+
+    // 🔥 YAHI ADD KARNA HAI (IMPORTANT)
+    document.getElementById("surveyPreview").src =
+      "http://localhost:5000/uploads/" + data.filename;
+
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Upload failed ❌");
+  });
+
+}
+
+// 🔥 ✅ APPROVE / REJECT FUNCTION
+function updateStatus(status) {
+
+  const yieldValue = document.getElementById("yieldInput").value;
+  const notes = document.getElementById("notesInput").value;
+
+  console.log("🔥 SENDING:", {
+    status,
+    notes,
+    yield: yieldValue
+  });
+
+  fetch(`http://localhost:5000/api/app/patwari/${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      status: status,
+      notes: notes,
+      yield: yieldValue
+    })
+  })
+  .then(res => res.json())
+ .then(data => {
+  alert("Status Updated ✅");
+
+  // 🔥 YAHAN ADD KARNA HAI
+  location.reload();
+})
+  .catch(err => {
+    console.log(err);
+    alert("Update failed ❌");
+  });
+}
+
+</script>
+</body>
+</html>

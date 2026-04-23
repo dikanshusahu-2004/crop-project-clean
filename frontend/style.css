@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #56ab2f, #a8e063);
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.link {
+    color: blue;
+    cursor: pointer;
+    margin-top: 10px;
+}
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(to right, #2e7d32, #66bb6a);
+}
+
+/* Main container */
+.main {
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    background: #2e7d32;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Process Flow */
+.process {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.step {
+    background: #eee;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.step.active {
+    background: #4CAF50;
+    color: white;
+}
+
+.arrow {
+    margin: 10px;
+}
+
+/* Cards */
+.cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    width: 250px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.card button {
+    width: 100%;
+    padding: 10px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.card button:hover {
+    background: #1b5e20;
+}
+.hidden {
+    display: none;
+}
