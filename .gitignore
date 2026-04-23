@@ -1,3 +1,6 @@
 node_modules/
-ai-model/model.h5
+uploads/
+dataset/
+ai-model/
+*.h5
 .env
