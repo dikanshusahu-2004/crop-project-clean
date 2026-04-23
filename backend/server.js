@@ -11,9 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-mongoose.connect("mongodb+srv://dikanshusahu_db_user:V8nkt4xcTcgwpOPO@cluster0.0ci2izn.mongodb.net/cropDB")
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.log("❌ DB Error:", err));
+mongoose.connect("mongodb+srv://dikanshusahu_db_user:52D4bAdZxN91xEI@cluster0.xxxxx.mongodb.net/cropDB")
 // ✅ routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/app", require("./routes/app"));
